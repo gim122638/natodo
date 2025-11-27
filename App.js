@@ -209,10 +209,11 @@ export default function App() {
                 { transform: [{ translateX: item.shake }] }
               ]}
             >
+              <Text style={styles.idx}>{idx}</Text>
+
               <Image source={{ uri: item.photos }} style={styles.photoImages} />
 
               <View style={styles.inbox}>
-                <Text style={styles.idx}>{idx + 1}</Text>
                 <Text style={styles.listTitle}>{item.title}</Text>
                 <Text style={styles.listdate}>{item.date}</Text>
 
@@ -352,13 +353,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   idx: {
-    width: 30,
+    position: 'absolute',  
+    top: 5, left: 5,
+    width: 200,
     textAlign: 'center',
-    marginBottom: 5,
-    flexShrink: 0,
-    numberOfLines: 1, 
-    ellipsizeMode: 'tail',
-  },
+    fontWeight: 'bold',
+    backgroundColor: 'rgba(255,255,255,0.7)', // 읽기 편하게 배경 반투명
+    borderRadius: 10,
+    paddingVertical: 2,
+    paddingHorizontal: 5,
+    zIndex: 1,
+    },
   id: {
     marginBottom: 10,
   },
