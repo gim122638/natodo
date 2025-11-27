@@ -212,7 +212,7 @@ export default function App() {
               <Image source={{ uri: item.photos }} style={styles.photoImages} />
 
               <View style={styles.inbox}>
-                <Text>{idx}</Text>
+                <Text style={styles.idx}>{idx + 1}</Text>
                 <Text style={styles.listTitle}>{item.title}</Text>
                 <Text style={styles.listdate}>{item.date}</Text>
 
@@ -350,6 +350,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  idx: {
+    width: 30,
+    textAlign: 'center',
+    marginBottom: 5,
+    flexShrink: 0,
+    numberOfLines: 1, 
+    ellipsizeMode: 'tail',
   },
   id: {
     marginBottom: 10,
