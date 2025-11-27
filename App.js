@@ -387,7 +387,7 @@ const styles = StyleSheet.create({
   },
 
   btnRow: {
-    flexDirection: 'colum',
+    flexDirection: 'column',
     alignItems: 'center',
     gap: 5, 
   },
