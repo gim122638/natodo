@@ -358,12 +358,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   listTitle: {
-    position: 'absolute',
-    top: 0, left: 0,
-    right: 0,
     fontSize: 20,
-    marginBottom: 5,
-    width: 200,
+    marginBottom: 10,
+    width: '100%',
   },
   rowContainer: {
     flexDirection: 'row',
