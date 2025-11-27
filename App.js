@@ -153,10 +153,8 @@ export default function App() {
         {/* 입력창 + 날짜 버튼 */}
         <View style={styles.inputR}>
           <TextInput
-            style={styles.in}
-            placeholder='할일을 입력하세요'
-            value={text}
-            onChangeText={setText}
+            style={styles.in} placeholder='할일을 입력하세요'
+            value={text} onChangeText={setText}
           />
           <Pressable style={styles.date} onPress={() => setShowPicker(true)}>
             <Text>{formatDate(date)}</Text>
@@ -199,35 +197,36 @@ export default function App() {
 
       {/* 리스트 */}
       <FlatList
-      style={styles.list}
-      data={todos}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item, idx }) => (
-        <Pressable onLongPress={() => shakeAndDelete(item)}>
-          <Animated.View
-            style={[
-              styles.box,
-              { transform: [{ translateX: item.shake }] }
-            ]}
-          >
-            <Image source={{ uri: item.photos }} style={styles.photoImages} />
+        style={styles.list}
+        data={todos}
+        keyExtractor={(item) => item.id}
+        ListEmptyComponent={<Text style={{ textAlign: 'center' }}>할일이 없어요</Text>}
+        renderItem={({ item, idx }) => (
+          <Pressable onLongPress={() => shakeAndDelete(item)}>
+            <Animated.View
+              style={[
+                styles.box,
+                { transform: [{ translateX: item.shake }] }
+              ]}
+            >
+              <Image source={{ uri: item.photos }} style={styles.photoImages} />
 
-            <View style={styles.inbox}>
-              <Text>{idx}</Text>
-              <Text style={styles.listTitle}>{item.title}</Text>
-              <Text style={styles.listdate}>{item.date}</Text>
+              <View style={styles.inbox}>
+                <Text>{idx}</Text>
+                <Text style={styles.listTitle}>{item.title}</Text>
+                <Text style={styles.listdate}>{item.date}</Text>
 
-              <View style={styles.btnRow}>
-                <Text style={styles.delbtn}>길게 누르면 삭제</Text>
-                <Pressable style={styles.editbtn} onPress={() => startEdit(item)}>
-                  <Text>수정</Text>
-                </Pressable>
+                <View style={styles.btnRow}>
+                  <Text style={styles.delbtn}>길게 누르면 삭제</Text>
+                  <Pressable style={styles.editbtn} onPress={() => startEdit(item)}>
+                    <Text>수정</Text>
+                  </Pressable>
+                </View>
               </View>
-            </View>
-          </Animated.View>
-        </Pressable>
-      )}
-    />
+            </Animated.View>
+          </Pressable>
+        )}
+      />
 
     </View>
   )
@@ -331,7 +330,7 @@ const styles = StyleSheet.create({
 
   // 리스트
   list: {
-    width: 280,
+    width: 300,
     height: 120,
     marginBottom: 5,
   },
