@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
   // 사진 미리보기
   previewBox: {
     width: 280, 
-    height: 120,
+    height: 150,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
   },
   photoImage: {
     width: 280, 
-    height: 150,
+    height: 120,
     borderRadius: 10,
   },
 
@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
 
   // 리스트
   list: {
-    width: 400,
+    width: 320,
     marginBottom: 5,
   },
   box: {
@@ -384,4 +384,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   }
 
-});
+})
