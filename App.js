@@ -209,19 +209,20 @@ export default function App() {
                 { transform: [{ translateX: item.shake }] }
               ]}
             >
-              <Text style={styles.idx}>{idx}</Text>
+              <Text style={styles.idx}>{idx + 1}</Text>
 
-              <Image source={{ uri: item.photos }} style={styles.photoImages} />
+              <View style={styles.rowContainer}>
+                <Image source={{ uri: item.photos }} style={styles.photoImages} />
+                <View style={styles.inbox}>
+                  <Text style={styles.listTitle}>{item.title}</Text>
+                  <Text style={styles.listdate}>{item.date}</Text>
 
-              <View style={styles.inbox}>
-                <Text style={styles.listTitle}>{item.title}</Text>
-                <Text style={styles.listdate}>{item.date}</Text>
-
-                <View style={styles.btnRow}>
-                  <Text style={styles.delbtn}>길게 누르면 삭제</Text>
-                  <Pressable style={styles.editbtn} onPress={() => startEdit(item)}>
-                    <Text>수정</Text>
-                  </Pressable>
+                  <View style={styles.btnRow}>
+                    <Text style={styles.delbtn}>길게 누르면 삭제</Text>
+                    <Pressable style={styles.editbtn} onPress={() => startEdit(item)}>
+                      <Text>수정</Text>
+                    </Pressable>
+                  </View>
                 </View>
               </View>
             </Animated.View>
@@ -336,11 +337,28 @@ const styles = StyleSheet.create({
   },
   box: {
     width: '100%',
-    height: 150,
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 10,
+    flexDirection: 'column',
+  },
+  idx: {
+    position: 'absolute',  
+    top: 5, left: 5,
+    width: 200,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    backgroundColor: 'rgba(255,255,255,0.7)',
+    borderRadius: 10,
+    paddingVertical: 2,
+    paddingHorizontal: 5,
+    zIndex: 1,
+  },
+  rowContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    padding: 10,
+    justifyContent: 'flex-start',
+    gap: 10,
   },
   photoImages: {
     width: 130, height: 140,
@@ -352,18 +370,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  idx: {
-    position: 'absolute',  
-    top: 5, left: 5,
-    width: 200,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    backgroundColor: 'rgba(255,255,255,0.7)', // 읽기 편하게 배경 반투명
-    borderRadius: 10,
-    paddingVertical: 2,
-    paddingHorizontal: 5,
-    zIndex: 1,
-    },
   id: {
     marginBottom: 10,
   },
