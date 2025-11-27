@@ -368,7 +368,7 @@ const styles = StyleSheet.create({
     gap: 5, 
   },
   delbtn: {
-    width: 'auto',
+    width: 100,
     padding: 8,
     backgroundColor: 'pink',
     borderRadius: 10,
@@ -376,6 +376,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   editbtn: {
+    width: 100,
     padding: 8,
     backgroundColor: 'lavender',
     borderRadius: 10,
