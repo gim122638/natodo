@@ -203,7 +203,7 @@ export default function App() {
         ListEmptyComponent={<Text style={{ textAlign: 'center' }}>할일이 없어요</Text>}
         renderItem={({ item, idx }) => (
           <View style={styles.listBox}>
-            <Text style={styles.idx}>{idx}</Text>
+            <Text style={styles.text}>{idx}</Text>
             <Pressable onLongPress={() => shakeAndDelete(item)}>
               <Animated.View
                 style={[
@@ -341,8 +341,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     alignItems: 'center',
   },
-  idx: {
-    width: 300,
+  text: {
     fontSize: 16,
     marginBottom: 5,
     textAlign: 'center',
