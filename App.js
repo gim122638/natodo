@@ -331,31 +331,18 @@ const styles = StyleSheet.create({
   // 리스트
   list: {
     width: 300,
-    height: 120,
     marginBottom: 5,
   },
-  emptyBox: {
-    width: '100%',
-    height: 120, 
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  emptyText: {
-    fontSize: 16,
-    color: 'gray',
-    textAlign: 'center',
-  },
-
   box: {
     width: 280,
-    height: 100,
+    height: 150,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 10,
   },
   photoImages: {
-    width: 130, height: 100,
+    width: 150, height: 140,
     borderRadius: 10,
   },
   inbox: {
