@@ -332,6 +332,7 @@ const styles = StyleSheet.create({
   list: {
     width: 280,
     height: 120,
+    marginBottom: 5,
   },
   emptyBox: {
     width: '100%',
@@ -354,10 +355,11 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   photoImages: {
-    width: 100, height: 90,
+    width: 120, height: 90,
     borderRadius: 10,
   },
   inbox: {
+    width: 150,
     marginLeft: 10,
     flex: 1,
     alignItems: 'center',
