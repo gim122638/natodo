@@ -202,31 +202,33 @@ export default function App() {
         keyExtractor={(item) => item.id}
         ListEmptyComponent={<Text style={{ textAlign: 'center' }}>할일이 없어요</Text>}
         renderItem={({ item, idx }) => (
-          <Pressable onLongPress={() => shakeAndDelete(item)}>
-            <Animated.View
-              style={[
-                styles.box,
-                { transform: [{ translateX: item.shake }] }
-              ]}
-            >
-              <Text style={styles.idx}>{idx}</Text>
+          <View style={styles.listBox}>
+            <Text style={styles.idx}>{idx}</Text>
+            <Pressable onLongPress={() => shakeAndDelete(item)}>
+              <Animated.View
+                style={[
+                  styles.box,
+                  { transform: [{ translateX: item.shake }] }
+                ]}
+              >
 
-              <View style={styles.rowContainer}>
-                <Image source={{ uri: item.photos }} style={styles.photoImages} />
-                <View style={styles.inbox}>
-                  <Text style={styles.listTitle}>{item.title}</Text>
-                  <Text style={styles.listdate}>{item.date}</Text>
+                <View style={styles.rowContainer}>
+                  <Image source={{ uri: item.photos }} style={styles.photoImages} />
+                  <View style={styles.inbox}>
+                    <Text style={styles.listTitle}>{item.title}</Text>
+                    <Text style={styles.listdate}>{item.date}</Text>
 
-                  <View style={styles.btnRow}>
-                    <Text style={styles.delbtn}>길게 누르면 삭제</Text>
-                    <Pressable style={styles.editbtn} onPress={() => startEdit(item)}>
-                      <Text>수정</Text>
-                    </Pressable>
+                    <View style={styles.btnRow}>
+                      <Text style={styles.delbtn}>길게 누르면 삭제</Text>
+                      <Pressable style={styles.editbtn} onPress={() => startEdit(item)}>
+                        <Text>수정</Text>
+                      </Pressable>
+                    </View>
                   </View>
                 </View>
-              </View>
-            </Animated.View>
-          </Pressable>
+              </Animated.View>
+            </Pressable>
+          </View>
         )}
       />
 
@@ -335,12 +337,8 @@ const styles = StyleSheet.create({
     width: 320,
     marginBottom: 5,
   },
-  box: {
-    width: '100%',
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 10,
-    flexDirection: 'column',
+  listBox: {
+
   },
   idx: {
     fontWeight: 'bold',
@@ -351,6 +349,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 2,
     paddingHorizontal: 5,
+  },
+  box: {
+    width: '100%',
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 10,
+    flexDirection: 'column',
   },
   rowContainer: {
     flexDirection: 'row',
