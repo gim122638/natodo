@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   in: {
-    width: 185,
+    width: 180,
     borderWidth: 1,
     borderColor: 'lightgray',
     padding: 12,
@@ -376,14 +376,13 @@ const styles = StyleSheet.create({
   },
 
   btnRow: {
-    flexDirection: 'row',
+    flexDirection: 'colum',
     alignItems: 'center',
     gap: 5, 
   },
   delbtn: {
     width: 'auto',
     padding: 8,
-    fontSize: 15,
     backgroundColor: 'pink',
     borderRadius: 10,
     justifyContent: 'center',
