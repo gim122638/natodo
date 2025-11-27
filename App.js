@@ -211,11 +211,11 @@ export default function App() {
                   { transform: [{ translateX: item.shake }] }
                 ]}
               >
+                <Text style={styles.listTitle}>{item.title}</Text>
 
                 <View style={styles.rowContainer}>
                   <Image source={{ uri: item.photos }} style={styles.photoImages} />
                   <View style={styles.inbox}>
-                    <Text style={styles.listTitle}>{item.title}</Text>
                     <Text style={styles.listdate}>{item.date}</Text>
 
                     <View style={styles.btnRow}>
@@ -357,6 +357,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     flexDirection: 'column',
   },
+  listTitle: {
+    position: 'absolute',
+    top: 0, left: 0,
+    right: 0,
+    fontSize: 20,
+    marginBottom: 5,
+    width: 200,
+  },
   rowContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -376,14 +384,6 @@ const styles = StyleSheet.create({
   },
   id: {
     marginBottom: 10,
-  },
-  listTitle: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    fontSize: 20,
-    marginBottom: 5,
   },
   listdate: {
     marginBottom: 5,
