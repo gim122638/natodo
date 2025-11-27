@@ -330,11 +330,11 @@ const styles = StyleSheet.create({
 
   // 리스트
   list: {
-    width: 300,
+    width: 500,
     marginBottom: 5,
   },
   box: {
-    width: 280,
+    width: '100%',
     height: 150,
     flexDirection: 'row',
     alignItems: 'center',
@@ -342,7 +342,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   photoImages: {
-    width: 150, height: 140,
+    width: 130, height: 140,
     borderRadius: 10,
   },
   inbox: {
@@ -368,7 +368,7 @@ const styles = StyleSheet.create({
     gap: 5, 
   },
   delbtn: {
-    width: 100,
+    width: 150,
     padding: 8,
     backgroundColor: 'pink',
     borderRadius: 10,
@@ -376,7 +376,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   editbtn: {
-    width: 100,
+    width: 150,
     padding: 8,
     backgroundColor: 'lavender',
     borderRadius: 10,
