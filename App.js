@@ -199,6 +199,7 @@ export default function App() {
 
       {/* 리스트 */}
       <FlatList
+      style={styles.list}
       data={todos}
       keyExtractor={(item) => item.id}
       renderItem={({ item, idx }) => (
@@ -250,7 +251,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   in: {
-    width: 190,
+    width: 180,
     borderWidth: 1,
     borderColor: 'lightgray',
     padding: 12,
