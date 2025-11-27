@@ -361,7 +361,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   photoImages: {
-    width: 90, height: 140,
+    width: 130, height: 100,
     borderRadius: 10,
   },
   inbox: {
