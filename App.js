@@ -384,6 +384,7 @@ const styles = StyleSheet.create({
   delbtn: {
     width: 'auto',
     padding: 8,
+    fontSize: 15,
     backgroundColor: 'pink',
     borderRadius: 10,
     justifyContent: 'center',
