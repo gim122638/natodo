@@ -356,11 +356,10 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   photoImages: {
-    width: 120, height: 90,
+    width: 130, height: 100,
     borderRadius: 10,
   },
   inbox: {
-    width: 150,
     marginLeft: 10,
     flex: 1,
     alignItems: 'center',
