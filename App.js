@@ -345,7 +345,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 5,
     textAlign: 'center',
-    backgroundColor: 'rgba(255,255,255,0.7)',
     borderRadius: 10,
     paddingVertical: 2,
     paddingHorizontal: 5,
@@ -363,6 +362,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     gap: 10,
+    position: 'relative',
   },
   photoImages: {
     width: 130, height: 100,
@@ -378,6 +378,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   listTitle: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
     fontSize: 20,
     marginBottom: 5,
   },
