@@ -342,7 +342,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   idx: {
-    fontWeight: 'bold',
+    width: 300,
     fontSize: 16,
     marginBottom: 5,
     textAlign: 'center',
