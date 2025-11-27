@@ -338,7 +338,8 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   listBox: {
-
+    marginBottom: 10,
+    alignItems: 'center',
   },
   idx: {
     fontWeight: 'bold',
@@ -349,6 +350,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 2,
     paddingHorizontal: 5,
+    minWidth: 30,
   },
   box: {
     width: '100%',
