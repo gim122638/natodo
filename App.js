@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
   },
   photoImage: {
     width: 280, 
-    height: 120,
+    height: 150,
     borderRadius: 10,
   },
 
@@ -374,6 +374,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
+    textAlign: 'center',
   },
   editbtn: {
     width: 130,
