@@ -1,5 +1,7 @@
-import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput, Platform, FlatList, Pressable, Image } from 'react-native';
+import React, {useState, useRef} from 'react'
+import { StyleSheet, Text, View, TextInput, Platform, 
+          FlatList, Pressable, Image, Animated
+        } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker'
 import * as ImagePicker from 'expo-image-picker'
 
@@ -9,6 +11,18 @@ export default function App() {
   const [date, setDate] = useState(new Date()) // 현재 날짜 기초값
   const [showPicker, setShowPicker] = useState(false) // 피터보여주기
   const [photo, setPhoto] = useState(null) // 사진
+  const [editing, setEditing] = useState(null)
+
+  const topAnim = useRef(new Animated.Value(1)).current
+
+  const runAni = () => {
+    topAnim.setValue(0.9)
+    Animated.timing(topAnim, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+    }).start()
+  }
 
   // 날짜 형식 만들기
   const formatDate = (d) => {
@@ -18,25 +32,68 @@ export default function App() {
     return `${y}-${m}-${day}` // 날짜 형식 맞추어서 리턴
   }
 
-  // 추가 버튼 구현
+  // 추가/ 수정 버튼 구현
   const addTodo = () => {
-    if(!text.trim()) return
+    if (!text.trim()) return;
 
-    const newTodo = {
-      id : Date.now().toString(),
-      title : text.trim(),
-      date : formatDate(date),
-      photos : photo,
+    if (editing) {
+      setTodos(todos.map(to =>
+        to.id === editing
+          ? { ...to, title: text.trim(), date: formatDate(date), photos: photo }
+          : to
+      ))
+      setEditing(null);
+    } else {
+      const newTodo = {
+        id: Date.now().toString(),
+        title: text.trim(),
+        date: formatDate(date),
+        photos: photo,
+        shake: new Animated.Value(0),  // 삭제 버튼 흔들림 애니메이션
+      }
+      setTodos([newTodo, ...todos]);
     }
-    setTodos([newTodo, ...todos])
-    setText('')
-    setPhoto(null)
+
+    setText("");
+    setPhoto(null);
   }
 
-  // 삭제버튼
-  const removeTode = (id) => {
-    setTodos(todos.filter((item) => item.id !== id))
+  // 수정 버튼
+  const startEdit = (item) => {
+    runAni() // 버튼 누를 때 애니메이션 실행
+    setEditing(item.id)
+    setText(item.title)
+    setDate(new Date(item.date))
+    setPhoto(item.photos)
   }
+
+  // 삭제 + 흔들기 애니메이션
+  const shakeAndDelete = (item) => {
+    if (!item.shake) item.shake = new Animated.Value(0)
+    Animated.sequence([
+      Animated.timing(item.shake, { 
+        toValue: 10, 
+        duration: 50, 
+        useNativeDriver: true 
+      }),
+      Animated.timing(
+        item.shake, 
+        { 
+          toValue: -10, 
+          duration: 50, 
+          useNativeDriver: true 
+        }),
+      Animated.timing(
+        item.shake, 
+        { 
+          toValue: 0, 
+          duration: 50, 
+          useNativeDriver: true 
+        }),
+    ]).start(() => {
+      setTodos(prev => prev.filter(t => t.id !== item.id))
+    })
+  } 
 
   // 날짜 변경시 이벤트 함수
   const changeDate = (e, chDate) =>{
@@ -90,70 +147,89 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Todo List</Text>
-      <View style={styles.inputR}>
 
-        {/* 할일 입력상자 */}
-        <TextInput style={styles.in} placeholder='할일을 입력하세요' value={text} onChangeText={setText} />
+      <Animated.View style={{ transform: [{ scale: topAnim }] }}>
+        
+        {/* 입력창 + 날짜 버튼 */}
+        <View style={styles.inputR}>
+          <TextInput
+            style={styles.in}
+            placeholder='할일을 입력하세요'
+            value={text}
+            onChangeText={setText}
+          />
+          <Pressable style={styles.date} onPress={() => setShowPicker(true)}>
+            <Text>{formatDate(date)}</Text>
+          </Pressable>
+        </View>
 
-        {/* 날짜 버튼 만들기 */}
-        <Pressable style={styles.date} onPress={() => setShowPicker(true)}>
-          <Text>{formatDate(date)}</Text>
-        </Pressable>
+        {showPicker && (
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display={Platform.OS === "ios" ? "spinner" : "default"}
+            onChange={changeDate}
+          />
+        )}
 
-
-      {/* 추가버튼 만들기 */}
-        <Pressable style={styles.addBox} onPress={addTodo}>
-          <Text style={styles.add}>추가</Text>
-        </Pressable>
-      </View>
-
-      {
-        //showpicker가 참(true)값이면 데이트피커를 호출해서 보여주기
-          showPicker && (
-            <DateTimePicker 
-              value={date} mode='date' display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-              onChange={changeDate}
-            />
-          )
-        }
-
-      {/* 사진관련 버튼*/}
+        {/* 카메라 & 갤러리 버튼 */}
         <View style={styles.photoBtn}>
           <Pressable style={styles.camera} onPress={getPhoto}>
-            <Text>카메라</Text>
+            <Text style={styles.cameraText}>카메라</Text>
           </Pressable>
+
           <Pressable style={styles.gellery} onPress={getGallery}>
-            <Text>갤러리</Text>
+            <Text style={styles.gelleryText}>갤러리</Text>
           </Pressable>
         </View>
 
+        {/* 미리보기 */}
         <View style={styles.previewBox}>
-          {
-            photo && (
-              <Image source={{uri : photo}} style={styles.photoImage}/>
-            )
-          }
+          {photo && (
+            <Image source={{ uri: photo }} style={styles.photoImage} />
+          )}
         </View>
 
-      {/* 할일 목록 리스트  */}
-      <FlatList data={todos} keyExtractor={ (item) => item.id }
-        ListEmptyComponent={ // 텅 비어있을 때
-          <Text>할일이 없어요</Text>
-        }
-        renderItem={ ({item, idx}) => (
-          <Pressable style={styles.box} onLongPress={() => removeTode(item.id)}> 
-            <View>
-              <Image source={{uri : item.photos}} style={styles.photoImages}/>
+        {/* 추가 / 저장 */}
+        <Pressable style={styles.addBox} onPress={addTodo}>
+          <Text style={styles.add}>{editing ? "저장" : "추가"}</Text>
+        </Pressable>
+
+      </Animated.View>
+
+      {/* 리스트 */}
+      <FlatList
+      data={todos}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item, idx }) => (
+        <Pressable onLongPress={() => shakeAndDelete(item)}>
+          <Animated.View
+            style={[
+              styles.box,
+              { transform: [{ translateX: item.shake }] }
+            ]}
+          >
+            <Image source={{ uri: item.photos }} style={styles.photoImages} />
+
+            <View style={styles.inbox}>
+              <Text>{idx}</Text>
+              <Text style={styles.listTitle}>{item.title}</Text>
+              <Text style={styles.listdate}>{item.date}</Text>
+
+              <View style={styles.btnRow}>
+                <Text style={styles.delbtn}>길게 누르면 삭제</Text>
+                <Pressable style={styles.editbtn} onPress={() => startEdit(item)}>
+                  <Text>수정</Text>
+                </Pressable>
+              </View>
             </View>
-            <Text style={styles.id}>{idx}</Text>
-            <Text>{item.title}</Text>
-            <Text>{item.date}</Text>
-            <Text style={styles.delbtn}>길게 눌러서 삭제</Text>
-          </Pressable>
-        )}
-      />
+          </Animated.View>
+        </Pressable>
+      )}
+    />
+
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -162,80 +238,161 @@ const styles = StyleSheet.create({
     marginTop: 40,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   title: {
     fontSize: 30,
     marginBottom: 20,
   }, 
+  // 입력창 + 날짜 버튼
   inputR: {
     flexDirection: 'row',
     marginBottom: 20,
   },
   in: {
-    width: 150,
+    width: 190,
     borderWidth: 1,
     borderColor: 'lightgray',
     padding: 12,
     borderRadius: 10,
-    marginRight: 10,
-  },
-  addBox: {
-    width: 50,
-    height: 40,
-    backgroundColor: 'royalblue',
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  add: {
-    color: 'white',
-    fontSize: 15,
-  },
-  box: {
-    marginBottom: 10,
-  },
-  id: {
-    marginTop: 10,
-    marginBottom: 10,
-  },
-  delbtn: {
-    width: 'auto',
-    padding: 8,
-    backgroundColor: 'lightgray',
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   date: {
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 10,
-    marginRight: 10,
-  },
-  photoImage: {
-    width: 100, height: 80,
+    marginRight: 5,
+    borderWidth: 1,
+    padding: 10,
     borderRadius: 10,
-    marginBottom: 10,
+    borderColor: 'lightgray',
+    color: 'lightgray',
   },
+
+  // 카메라, 갤러리 버튼
   photoBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: 5,
     marginBottom: 10,
   },
   camera: {
-    padding: 10,
+    width: 138,
+    padding: 18,
     backgroundColor: 'lavender',
     borderRadius: 10,
-  }, 
+  },
+  cameraText: {
+    fontSize: 18,
+    textAlign:'center',
+  },
   gellery: {
-    padding: 10,
+    width: 138,
+    padding: 18,
     backgroundColor: 'skyblue',
     borderRadius: 10,
   },
-  photoImages: {
-    width: 80, height: 60,
+  gelleryText: {
+    fontSize: 18,
+    textAlign:'center',
+  },
+
+  // 사진 미리보기
+  previewBox: {
+    width: 280, 
+    height: 120,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'lightgray',
     borderRadius: 10,
+    marginBottom: 20,
+  },
+  photoImage: {
+    width: 280, 
+    height: 120,
+    borderRadius: 10,
+  },
+
+  // 추가 or 저장 버튼
+  addBox: {
+    width: 280,
+    height: 40,
+    backgroundColor: 'royalblue',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  add: {
+    color: 'white',
+    fontSize: 18,
+  },
+
+  // 리스트
+  list: {
+    width: 280,
+    height: 120,
+  },
+  emptyBox: {
+    width: '100%',
+    height: 120, 
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyText: {
+    fontSize: 16,
+    color: 'gray',
+    textAlign: 'center',
+  },
+
+  box: {
+    width: 280,
+    height: 100,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+  },
+  photoImages: {
+    width: 100, height: 90,
+    borderRadius: 10,
+  },
+  inbox: {
+    marginLeft: 10,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  id: {
+    marginBottom: 10,
+  },
+  listTitle: {
+    fontSize: 20,
+    marginBottom: 5,
+  },
+  listdate: {
+    marginBottom: 5,
+  },
+
+  btnRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5, 
+  },
+  delbtn: {
+    width: 'auto',
+    padding: 8,
+    backgroundColor: 'pink',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  editbtn: {
+    padding: 8,
+    backgroundColor: 'lavender',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
+
 });
