@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
   },
   photoImage: {
     width: 280, 
-    height: 120,
+    height: 150,
     borderRadius: 10,
   },
 
@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
 
   // 리스트
   list: {
-    width: 500,
+    width: 400,
     marginBottom: 5,
   },
   box: {
@@ -368,7 +368,7 @@ const styles = StyleSheet.create({
     gap: 5, 
   },
   delbtn: {
-    width: 150,
+    width: 130,
     padding: 8,
     backgroundColor: 'pink',
     borderRadius: 10,
@@ -376,7 +376,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   editbtn: {
-    width: 150,
+    width: 130,
     padding: 8,
     backgroundColor: 'lavender',
     borderRadius: 10,
