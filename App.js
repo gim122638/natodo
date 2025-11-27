@@ -209,7 +209,7 @@ export default function App() {
                 { transform: [{ translateX: item.shake }] }
               ]}
             >
-              <Text style={styles.idx}>{idx + 1}</Text>
+              <Text style={styles.idx}>{idx}</Text>
 
               <View style={styles.rowContainer}>
                 <Image source={{ uri: item.photos }} style={styles.photoImages} />
@@ -345,7 +345,7 @@ const styles = StyleSheet.create({
   idx: {
     position: 'absolute',  
     top: 5, left: 5,
-    width: 200,
+    width: 300,
     textAlign: 'center',
     fontWeight: 'bold',
     backgroundColor: 'rgba(255,255,255,0.7)',
