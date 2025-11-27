@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   in: {
-    width: 180,
+    width: 185,
     borderWidth: 1,
     borderColor: 'lightgray',
     padding: 12,
